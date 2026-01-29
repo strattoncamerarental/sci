@@ -1,0 +1,11 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails / indexing
+Icon?
+._*
+
+# BBEdit
+*.bbprojectd/
