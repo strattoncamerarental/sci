@@ -130,14 +130,6 @@ h1 {
 .h1-inline::before {
   content: "• ";
 }
-.equipment h1 {
-    font-size: 1.8em;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    line-height: 1;
-    color: #414141;
-    margin: 0 0 .5em;
-}
 h2 {
   font-size: 1.5em;
   margin: 0 0 10px;
@@ -1354,44 +1346,12 @@ figure {
     padding: 5px;
     margin: 0 20px 0 20px;
 }
-a.quicklink {
-  display: block;
-  position: relative;
-  overflow: hidden;
-  color: #fff;
-  text-decoration: none;
-  text-align: center;
-  padding: 0.15em;
-  margin-bottom: 10px;
-  border: 1px solid transparent;
-  font-size: 1.2em;
-}
-/* this is a background for a full width element (1100) */
-a.quicklink::before {
-  content: "";
-  position: absolute;
-  inset: 0; /* shorthand for top:0; right:0; bottom:0; left:0 */
-  background: url("../img/qlbg.webp") center/cover no-repeat;
-  opacity: 1; /* fully visible by default */
-  transition: opacity 0.4s ease; /* smooth fade */
-  z-index: -1; /* keeps it behind the text */
-}
-a.quicklink:hover::before {
-  opacity: 0.5; /* 50% faded on hover */
-}
-a.quicklink:hover {
-  color: #000;
-  font-weight: 700;
-  text-decoration: none;
-  border: 1px solid #a7a7a7;
-}
 h2.quicklinkequipment { 
   background: #efefef;
   padding: .1em;
   margin: 0;
   font-size: 1.2em;
-  letter-spacing: .04em;
-  font-style: italic;
+  letter-spacing: .03em;
 }
 h2.quicklinkequipment a::after {
   content: " \2192"; /* right arrow */
@@ -1444,14 +1404,6 @@ h2.quicklinkequipment a::after {
     text-decoration: none !important;
     box-shadow: none !important;
     font-weight: inherit !important;
-  }
-  /* QUICKLINK banner — avoid “preview hover” on tap */
-  a.quicklink:hover::before {
-    opacity: 1 !important;           /* don’t fade the bg on touch */
-  }
-  a.quicklink:hover {
-    font-weight: inherit !important;  /* no bold-on-hover on touch */
-    border-color: transparent !important;
   }
   /* VIDEO / WORKS overlays:
      make sure they don't require a first tap just to show the icon */
