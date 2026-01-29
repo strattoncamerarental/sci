@@ -1,0 +1,30 @@
+/* ============================================
+   COMPONENT: SLIDESHOW
+   ============================================ */
+.slideshow {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 11 / 3; /* default */
+}
+/* Ratio modifiers (slideshow-scoped) */
+.slideshow.r-8x3  { aspect-ratio: 8 / 3; }
+.slideshow.r-8x5  { aspect-ratio: 8 / 5; }
+.slideshow.r-16x9 { aspect-ratio: 16 / 9; }
+.slideshow img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+}
+.slideshow img.is-active {
+    opacity: 1;
+}
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .slideshow img {
+        transition: none;
+    }
+}

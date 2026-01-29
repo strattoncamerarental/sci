@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /1998/
+Disallow: /LP25nfpc/
+
+Sitemap: https://strattoncamera.com/sitemap.xml
