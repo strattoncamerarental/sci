@@ -21,7 +21,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // VERSIONED CACHES
 ////////////////////////////////////////////////////////////////////////////////
-const SW_VERSION = 'v12.2';                 // ← bump on every deploy
+const SW_VERSION = 'v12.3';                 // ← bump on every deploy
 const PRECACHE   = `precache-${SW_VERSION}`;
 const RUNTIME    = `runtime-${SW_VERSION}`;
 
