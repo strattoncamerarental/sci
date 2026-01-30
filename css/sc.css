@@ -1567,6 +1567,46 @@ ul.grid li h3 {
 .price {
     float: right; /* for PRICE page */
 }
+/* ==========================
+   INTERNAL LP LIST
+   ========================== */
+.lp-list {
+  margin: 0 0 1.25em;
+  padding: 0;
+}
+.lp-list li {
+  display: grid;
+  grid-template-columns: 1fr 5.5em;
+  gap: 0.75em;
+  padding: 0.2em 0.4em;
+  align-items: baseline;
+}
+.lp-list li:nth-child(odd):not(.lp-section) {
+  background: #f3f3f3;
+}
+.lp-list span:last-child {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  color: #333;
+}
+.lp-section {
+  grid-column: 1 / -1;
+  font-weight: 700;
+  padding: 0.35em 0.4em;
+  background: #e7e7e7;
+  margin-top: 0.4em;
+  letter-spacing: 0.02em;
+}
+.lp-divider {
+  border: 0;
+  border-top: 1px solid rgba(0,0,0,.12);
+  margin: 1rem 0;
+}
+@media (max-width: 480px) {
+  .lp-list li {
+    grid-template-columns: 1fr auto;
+  }
+}
 /* ============================================
    MEDIA QUERIES
 ============================================ */
