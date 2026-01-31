@@ -1,35 +1,34 @@
 /* eslint-env serviceworker, es2021 */
-/* jshint esversion: 10 */
 /* global self, caches, clients, Response, URL */
 
 /*
   Stratton Camera Service Worker (sw.js)
 
-  Goals:
-    • Remain safe under HTTPS (including Cloudflare Flexible)
-    • Never cache redirects or HTML in place of JS/CSS
-    • Only handle same-origin GET requests
-    • Fast updates with network-first for HTML, SWR for CSS/JS
-    • Bounded, cache-first for images/fonts
+  Purpose (2026):
+  • Fast repeat navigation for a large static catalog
+  • Safe caching under HTTPS + Cloudflare FULL
+  • Never cache redirects or wrong content-types
+  • Predictable updates (no stale CSS/JS surprises)
+  • Bounded runtime caches (no storage creep)
 
-  Maintenance:
-    • Bump SW_VERSION on each deploy
-    • Keep PRECACHE_URLS lean
-    • Purge old caches on activate
+  Update policy:
+  • Bump SW_VERSION on every deploy
 */
 
 ////////////////////////////////////////////////////////////////////////////////
 // VERSIONED CACHES
 ////////////////////////////////////////////////////////////////////////////////
-const SW_VERSION = 'v12.3';                 // ← bump on every deploy
-const PRECACHE   = `precache-${SW_VERSION}`;
-const RUNTIME    = `runtime-${SW_VERSION}`;
+const SW_VERSION = 'v13.1';
 
-// Minimal app shell (keep small)
+const PRECACHE = `precache-${SW_VERSION}`;
+const RUNTIME  = `runtime-${SW_VERSION}`;
+
+////////////////////////////////////////////////////////////////////////////////
+// PRECACHE (static, truly stable assets only)
+////////////////////////////////////////////////////////////////////////////////
 const PRECACHE_URLS = [
-  '/',                    // entry
-  '/css/sc.css',          // BASE
-  '/css/slideshow.css',   // shared component
+  '/css/sc.css',
+  '/css/slideshow.css',
   '/js/scripts.js',
   '/js/jq.min.js',
   '/site.webmanifest',
@@ -37,7 +36,7 @@ const PRECACHE_URLS = [
 ];
 
 ////////////////////////////////////////////////////////////////////////////////
-// INSTALL — Precache app shell & take control ASAP
+// INSTALL — Precache + activate immediately
 ////////////////////////////////////////////////////////////////////////////////
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -47,105 +46,112 @@ self.addEventListener('install', (event) => {
 });
 
 ////////////////////////////////////////////////////////////////////////////////
-// ACTIVATE — Clean old caches & claim clients
+// ACTIVATE — Remove old caches + claim clients
 ////////////////////////////////////////////////////////////////////////////////
 self.addEventListener('activate', (event) => {
   const keep = new Set([PRECACHE, RUNTIME]);
+
   event.waitUntil(
     (async () => {
       const keys = await caches.keys();
-      await Promise.all(keys.map((k) => (keep.has(k) ? null : caches.delete(k))));
+      await Promise.all(
+        keys.map((key) => (keep.has(key) ? null : caches.delete(key)))
+      );
       await self.clients.claim();
     })()
   );
 });
 
 ////////////////////////////////////////////////////////////////////////////////
-// FETCH — Strategy matrix with strict guards
+// FETCH — Routing + strategies
 ////////////////////////////////////////////////////////////////////////////////
 self.addEventListener('fetch', (event) => {
   const req = event.request;
 
-  // Only handle same-origin GET requests
+  // Only same-origin GET requests
   if (req.method !== 'GET') return;
 
-  // Chrome extension quirk: avoid errors on preloads
+  // Chrome preload quirk
   if (req.cache === 'only-if-cached' && req.mode !== 'same-origin') return;
 
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return;
 
-  // 1) HTML/documents → Network-first
-  if (req.destination === 'document' || req.mode === 'navigate') {
+  // Documents (HTML) → network-first
+  if (req.mode === 'navigate' || req.destination === 'document') {
     event.respondWith(networkFirst(req));
     return;
   }
 
-  // 2) CSS/JS → Stale-while-revalidate with type safety
+  // CSS / JS → stale-while-revalidate (strict)
   if (req.destination === 'style' || req.destination === 'script') {
-    event.respondWith(staleWhileRevalidate(req, /*revalidate*/ true, /*strictType*/ true));
+    event.respondWith(staleWhileRevalidate(req, event, true));
     return;
   }
 
-  // 3) Images → Cache-first (bounded)
+  // Images → cache-first (bounded)
   if (req.destination === 'image') {
-    event.respondWith(cacheFirstWithLimit(req, 200));
+    event.respondWith(cacheFirst(req, event, 200));
     return;
   }
 
-  // 4) Fonts → Cache-first (smaller bound)
+  // Fonts → cache-first (smaller bound)
   if (req.destination === 'font') {
-    event.respondWith(cacheFirstWithLimit(req, 50));
+    event.respondWith(cacheFirst(req, event, 50));
     return;
   }
 
-  // 5) Everything else → conservative SWR
-  event.respondWith(staleWhileRevalidate(req));
+  // Everything else → SWR (non-strict)
+  event.respondWith(staleWhileRevalidate(req, event));
 });
 
 ////////////////////////////////////////////////////////////////////////////////
 // STRATEGIES
 ////////////////////////////////////////////////////////////////////////////////
+
 async function networkFirst(request) {
   const cache = await caches.open(RUNTIME);
+
   try {
     const res = await fetch(request, { cache: 'no-store', redirect: 'follow' });
     if (isGoodResponse(res, request)) {
       cache.put(request, res.clone());
     }
     return res;
-  } catch (e) {
+  } catch {
     const cached = await cache.match(request);
-    return cached || offlineFallback();
+    return cached || offlineDocument();
   }
 }
 
-async function staleWhileRevalidate(request, revalidate = false, strictType = false) {
+async function staleWhileRevalidate(request, event, strictType = false) {
   const cache = await caches.open(RUNTIME);
   const cached = await cache.match(request);
 
-  const fetchOpts = {
-    redirect: 'follow',
-    cache: revalidate ? 'no-cache' : 'default'
-  };
+  const updatePromise = fetch(request, { redirect: 'follow' })
+    .then((res) => {
+      if (isGoodResponse(res, request, strictType)) {
+        cache.put(request, res.clone());
+      }
+      return res;
+    })
+    .catch(() => null);
 
-  const netPromise = fetch(request, fetchOpts).then((res) => {
-    if (isGoodResponse(res, request, strictType)) {
-      cache.put(request, res.clone());
-    }
-    return res;
-  }).catch(() => null);
+  // Guarantee background update completes
+  event.waitUntil(updatePromise);
 
-  return cached || netPromise || offlineFallback();
+  if (cached) return cached;
+
+  const res = await updatePromise;
+  return res || offlineFallback();
 }
 
-async function cacheFirstWithLimit(request, maxEntries = 300) {
+async function cacheFirst(request, event, maxEntries) {
   const cache = await caches.open(RUNTIME);
   const cached = await cache.match(request);
 
   if (cached) {
-    // Background refresh (don’t block)
-    fetch(request, { redirect: 'follow' })
+    const refresh = fetch(request, { redirect: 'follow' })
       .then((res) => {
         if (isGoodResponse(res, request)) {
           cache.put(request, res.clone());
@@ -153,6 +159,8 @@ async function cacheFirstWithLimit(request, maxEntries = 300) {
         }
       })
       .catch(() => {});
+
+    event.waitUntil(refresh);
     return cached;
   }
 
@@ -171,41 +179,50 @@ async function cacheFirstWithLimit(request, maxEntries = 300) {
 ////////////////////////////////////////////////////////////////////////////////
 // HELPERS
 ////////////////////////////////////////////////////////////////////////////////
+
 function isGoodResponse(res, req, strictType = false) {
   if (!res) return false;
-  // Must be a successful, same-origin (basic) response and NOT a redirect
-  if (!res.ok || res.type !== 'basic' || res.redirected) return false;
+  if (!res.ok) return false;
+  if (res.type !== 'basic') return false;
+  if (res.redirected) return false;
 
   if (!strictType) return true;
 
-  // When strictType is on (for CSS/JS), verify content-type matches the request
-  const dest = req && req.destination;
+  const dest = req.destination;
   const ct = (res.headers.get('content-type') || '').toLowerCase();
 
-  if (dest === 'script') return ct.includes('javascript');
-  if (dest === 'style')  return ct.includes('css');
-  if (dest === 'image')  return ct.startsWith('image/');
+  if (dest === 'script')   return ct.includes('javascript');
+  if (dest === 'style')    return ct.includes('css');
+  if (dest === 'image')    return ct.startsWith('image/');
   if (dest === 'document') return ct.includes('html');
 
-  return true; // for other asset types
+  return true;
+}
+
+function offlineDocument() {
+  return new Response(
+    '<!doctype html><title>Offline</title>' +
+    '<meta name="viewport" content="width=device-width,initial-scale=1">' +
+    '<h1>Offline</h1><p>This page isn’t available without a connection.</p>',
+    { headers: { 'content-type': 'text/html; charset=utf-8' }, status: 503 }
+  );
 }
 
 function offlineFallback() {
-  // Tiny empty fallback to avoid throwing; customize if desired.
   return new Response('', { status: 504, statusText: 'Offline' });
 }
 
 async function trimCache(cache, maxEntries) {
   const keys = await cache.keys();
   const excess = keys.length - maxEntries;
-  if (excess > 0) {
-    for (let i = 0; i < excess; i++) {
-      await cache.delete(keys[i]);
-    }
+  for (let i = 0; i < excess; i++) {
+    await cache.delete(keys[i]);
   }
 }
 
-// Allow page to request immediate activation
+////////////////////////////////////////////////////////////////////////////////
+// MESSAGES
+////////////////////////////////////////////////////////////////////////////////
 self.addEventListener('message', (event) => {
   if (event.data === 'SKIP_WAITING') self.skipWaiting();
 });
