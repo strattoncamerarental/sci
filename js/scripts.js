@@ -125,10 +125,8 @@ function closeiframeModal() {
 
   // ✅ Resume hero video (Safari-safe)
   if (window.heroPlayer) {
-    window.heroPlayer.setVolume(0).then(() => {
-      window.heroPlayer.play().catch(() => {});
-    });
-  }
+  window.heroPlayer.play().catch(() => {});
+}
 }
 // END Modals===============================================
 
