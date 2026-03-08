@@ -838,6 +838,12 @@ header nav a img:hover {
     text-transform: uppercase;
     color: #000; 
 }
+.lens-menu .lens-heading-item {
+    margin: .45em 0 .05em;   /* top / bottom */
+}
+.lens-menu .lens-heading {
+    line-height: 1.05;      /* tightens block height */
+}
 .main>section {
     margin-bottom: 1em;
 }
