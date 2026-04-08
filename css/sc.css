@@ -139,41 +139,41 @@ h2 {
   font-weight: 500;
 }
 h3 {
-    font-size: 1.12em;
-    margin: 0 0 5px;
-    letter-spacing: -.05em;
-    line-height: 1.1;
-    color: #333;
-    font-weight: 500;
+  font-size: 1.12em;
+  margin: 0 0 5px;
+  letter-spacing: -.05em;
+  line-height: 1.1;
+  color: #333;
+  font-weight: 500;
 }
 h4 {
-    font-size: 0.95em;
-    margin: 0 0 .3em;
-    font-weight: 500;
+  font-size: 0.95em;
+  margin: 0 0 .3em;
+  font-weight: 500;
 }
 h5 {
-    font-size: 0.7em;
-    text-transform: uppercase;
-    color: #555;
+  font-size: 0.7em;
+  text-transform: uppercase;
+  color: #555;
 }
 h6 {
-    font-size: 0.474em;
-    margin-bottom: 2px;
+  font-size: 0.474em;
+  margin-bottom: 2px;
 }
 h1 a, h4 a, h5 a, h6 a {
-    color: #333;
-    text-decoration: none;
+  color: #333;
+  text-decoration: none;
 }
 h1 a:hover, h2 a:hover, h4 a:hover, h5 a:hover, h6 a:hover {
-    color: #0078CF;
-    text-decoration: underline;
+  color: #0078CF;
+  text-decoration: underline;
 }
 h3 a {
-    color: #0078CF;
-    font-weight: 700;
-    cursor: pointer;
-    text-decoration: none;
-    transition: color 0.2s ease;
+  color: #0078CF;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
 small {
     font-size: 85%;
@@ -1542,33 +1542,45 @@ ul.grid li h3 {
 }
     /* Structure for directory.htm */
 .mapsite {
-    font-size: .75rem;
+    font-size: .8rem;
     color: #333;
     margin-bottom: 1em;
+    padding-right: 2em;
 }
 .mapsite h2 {
     font-size: 1rem;
-    margin: auto;
+    margin: .1em auto;
 }
-.mapsite h5 {
-    margin: auto;
+.map-subhead {
+  font-size: 0.95em;
+  font-weight: 500;
+  margin: 0 0 .2em .4em;
+  letter-spacing: 0.02em;
 }
 .mapsite a {
-    color: #333; /* Default link color for .mapsite */
+    color: #333;
+}    
+.mapsite ul {
+    margin: 0 0 .5em .25em;
 }
 .mapsite li a:hover {
     color: var(--primary-color);
 }
-.mapsite li {
-    float: left;
-    margin-right: 1em;
-    padding-right: 1em;
-    border-right: 1px solid #DDD;
+.mapsite ul {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 0 .9em 1em;
+  padding: 0;
+  row-gap: .08em;
 }
-.mapsite li:last-child {
-    margin-right: 0;
-    padding-right: 0;
-    border-right: none;
+.mapsite li {
+  margin: 0;
+  padding: 0;
+}
+.mapsite li + li::before {
+  content: "•";
+  color: #bbb;
+  margin: 0 0.6em;
 }
 /* ==========================
    INTERNAL LP LIST
@@ -1596,7 +1608,8 @@ ul.grid li h3 {
   grid-column: 1 / -1;
   font-weight: 700;
   padding: 0.35em 0.4em;
-  background: #e7e7e7;
+  color: #fff;
+  background: #707070;
   margin-top: 0.4em;
   letter-spacing: 0.02em;
 }
@@ -1606,7 +1619,15 @@ ul.grid li h3 {
   margin: 1rem 0;
 }
 .price {
-    float: right; /* for PRICE page */
+    float: right;
+}    
+/* ==========================
+   USED PAGES
+   ========================== */
+.used-price {
+	font-size:1.1em;
+	font-weight:600;
+	color:#C00;
 }
 @media (max-width: 480px) {
   .lp-list li {
