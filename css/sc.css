@@ -909,12 +909,8 @@ td {
 /* ============================
    FOOTER
    ============================ */
-/* Make the footer's grid-wrap a flex container */
-footer.grid-wrap {
-    display: flex;
-    flex-wrap: wrap;              /* allows 3 cols + full-width row */
-    justify-content: space-between;
-    align-items: flex-start;
+footer .grid {
+  padding-left: 0;
 }
 footer {
     color: #444;
@@ -952,7 +948,7 @@ footer > ul {
 footer > ul li {
     display: inline-block;
     margin: 0;
-    padding: 0 .85em 0 .55em;
+    padding: 0 .85em 0 .3em;
     border-right: 1px solid #ccc;
     line-height: 1.8em;
     font-size: 0.85em;
@@ -1001,7 +997,7 @@ footer a[href="/"]:hover {
 /* SOCIAL ICON ROW (right column) */
 footer nav ul {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     flex-wrap: wrap;
     gap: 1.3em;
@@ -1794,6 +1790,9 @@ body.nav-open #mobile-nav {
 }
 #mobile-nav a {
   text-transform: none;
+}
+footer nav ul {
+    justify-content: center;
 }
 } /* END mq2 */
 /* ======================================== */
