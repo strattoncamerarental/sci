@@ -548,7 +548,7 @@ header.grid.col-full hr {
 .col-one-sixth {
     width: 16.666%;
 }
-header#navtop {
+header.site-header {
     margin-bottom: 0em;
     clear: both;
     overflow: hidden;
@@ -1645,7 +1645,7 @@ ul.grid li h3 {
 .mq2-only { display: inline-block; }
 .mq2-none { display: none; }
 hr.mq2-only { display: block; }
-header#navtop nav.fright {
+header.site-header nav.fright {
       display: none;
 }
 .lead,
@@ -1691,13 +1691,13 @@ td {
   /* ============================
      Mobile nav / hamburger
      ============================ */
-header#navtop {
+header.site-header {
     position: relative;
     overflow: visible;
     padding-bottom: 0.5em;
 }
   /* clearfix for floated logo/nav inside header */
-header#navtop::after {
+header.site-header::after {
     content: "";
     display: block;
     clear: both;
@@ -1915,7 +1915,7 @@ h2, h3 {
     display: none !important;
 }
   /* Hide header chrome but KEEP logo */
-header#navtop nav,
+header.site-header nav,
 #page-head,
 #nav-toggle,
 #mobile-nav {
