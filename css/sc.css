@@ -948,9 +948,9 @@ footer > ul {
 footer > ul li {
     display: inline-block;
     margin: 0;
-    padding: 0 .85em 0 .3em;
+    padding: 0 .6em;
     border-right: 1px solid #ccc;
-    line-height: 1.8em;
+    line-height: 1.2em;
     font-size: 0.85em;
 }
 footer > ul li:last-child {
