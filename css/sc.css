@@ -731,8 +731,10 @@ header nav a img:hover {
 }
 .hero-media {
   position: relative;
+  width: 100%;
   aspect-ratio: 8 / 3;
   overflow: hidden;
+  background: #000;
 }
 .hero-media > * {
   position: absolute;
@@ -759,6 +761,7 @@ header nav a img:hover {
   z-index: 2;
 }
 .hero-video-wrap iframe {
+  display: block;
   width: 100%;
   height: 100%;
 }
