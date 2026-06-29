@@ -172,8 +172,8 @@
     width: clamp(42px, 8vw, 100px);
 	height: clamp(44px, 8.3vw, 104px);
     left: 50%;
-    top: 20%;
-    transform: translate(-50%, -20%);
+    top: 50%;
+    transform: translate(-50%, -50%);
     background: url("../img/watch.png") no-repeat center;
     background-size: contain;
     opacity: 1;
