@@ -366,12 +366,30 @@ if (heroIframe && heroWrap && window.Vimeo) {
     });
   }
 
-   // Pause video when the page isn't visible (Safari memory saver)
-  document.addEventListener("visibilitychange", () => {
-   if (document.hidden && window.heroPlayer) {
-    window.heroPlayer.pause().catch(() => {});
-   }
-  });
+   // Pause when hidden; resume when visible again
+	let heroVolumeBeforeHide = 0;
+
+document.addEventListener("visibilitychange", async () => {
+  if (!window.heroPlayer) return;
+
+  if (document.hidden) {
+    try {
+      heroVolumeBeforeHide = await window.heroPlayer.getVolume();
+      await window.heroPlayer.pause();
+    } catch (error) {}
+  } else {
+    try {
+      // Resume muted first so Safari allows playback
+      await window.heroPlayer.setVolume(0);
+      await window.heroPlayer.play();
+
+      // Restore the previous sound setting
+      if (heroVolumeBeforeHide > 0) {
+        await window.heroPlayer.setVolume(heroVolumeBeforeHide);
+      }
+    } catch (error) {}
+  }
+});
 
    // Pause when Safari puts the page into the page cache
   window.addEventListener("pagehide", () => {
