@@ -357,7 +357,7 @@ if (heroIframe && heroWrap && window.Vimeo) {
     });
   }
 
-  // Pause hero and open modal
+    // Pause hero and open modal
   const overlay = document.getElementById("videoClickOverlay");
   if (overlay) {
     overlay.addEventListener("click", () => {
@@ -365,6 +365,21 @@ if (heroIframe && heroWrap && window.Vimeo) {
       openiframeModal("https://player.vimeo.com/video/1068249893");
     });
   }
+
+   // Pause video when the page isn't visible (Safari memory saver)
+  document.addEventListener("visibilitychange", () => {
+   if (document.hidden && window.heroPlayer) {
+    window.heroPlayer.pause().catch(() => {});
+   }
+  });
+
+   // Pause when Safari puts the page into the page cache
+  window.addEventListener("pagehide", () => {
+  if (window.heroPlayer) {
+    window.heroPlayer.pause().catch(() => {});
+  }
+});
+
 }
 
 // Service Worker: register on all pages that load this script
