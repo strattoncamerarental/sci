@@ -93,24 +93,19 @@
 				<li class="active">About Us</li>
 			</ul>
 		</nav><hr>
-		<!-- video window --> 
-			<div class="video-container" style="padding-top:calc(100%*(3/11));">
-  			  <iframe id="heroVideo"
-				src="https://player.vimeo.com/video/1057582792?autoplay=1&muted=1&loop=1&background=1"
-				allow="autoplay; fullscreen; picture-in-picture"
-				allowfullscreen
-				style="border: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
-			  </iframe>
-		<!-- Transparent clickable overlay -->
-				<div id="videoClickOverlay"
-				style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; cursor: pointer;">
-				</div>
-				<button id="toggleSound" style="position: absolute; z-index: 11; bottom: 10px; right: 10px;">🔊 Sound On</button>
-			</div>
-			<p class="fright" style="font-size:.7em;">
-				Click on the video for the full resolution version with original music
-			</p>
-		</div>
+		
+	<!-- video window -->
+	<div class="video-container autoplay-video" data-modal-url="https://www.youtube.com/embed/G-3WEQzNmsk?si=J9xuFugN_FFgG5Ml" style="padding-top:calc(100%*(3/11));">
+		<iframe class="autoplay-video-frame" src="https://player.vimeo.com/video/1057582792?autoplay=1&muted=1&loop=1&background=1" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen> </iframe> 
+		<div class="autoplay-video-overlay">
+	</div>
+	<button type="button" class="autoplay-video-sound"> 🔊 Sound On </button> 
+	</div>
+		<p class="fright" style="font-size:.7em;">
+		Click on the video for the full resolution version with original music 
+		</p>
+	</div>
+
 		<div class="grid col-full">
 			<img src="img/years.png" width="300" height="100" alt="41 years in business" class="fleft years-img">
 			<p>
@@ -225,10 +220,9 @@
 		<footer><ul class="grid mq2-col-full col-one-third halfmbottom"><li><a href="/equipment">All Equipment</a></li><li><a href="/camera-rental-detroit-michigan">Cameras</a></li><li><a href="/lenses">Lenses</a></li><li><a href="/aks">Accessories</a></li><li><a href="/support">Support</a></li><li><a href="/expendables">Expendables</a></li><li><a href="/accounts">How to Rent</a></li><li><a href="/contact">Contact</a></li><li class="navactive" aria-current="page">About</li><li><a href="/reference">Downloads</a></li><li><a href="/video">Video Library</a></li><li><a href="/used">Used Equipment</a></li><li><a href="/socials">Social Media</a></li></ul><div class="loc grid mq2-col-full col-one-third quartermbottom"><a href="https://goo.gl/maps/M3DSTTKY2K12" target="_blank" rel="noopener"> <span style="font-size:.95em;">23815 Industrial Park Drive<br>Farmington Hills, MI 48335</span> </a> <span class="footer-phone"> <span class="phone-bg"> <a href="tel:+12484276400">+1 248.427.6400</a> </span> </span> <a href="/"><img src="img/logo.svg" alt="Stratton Camera Inc." class="bottomlogo"></a><p class="tagline">Trust the yellow case &bull; since 1984</p></div><nav class="grid mq2-col-full col-one-third"><ul><li><a href="https://www.youtube.com/strattoncamera" target="_blank" rel="noopener"><img src="img/yt.png" loading="lazy" class="icon-img" alt="Stratton Camera on YouTube"></a></li><li><a href="https://www.instagram.com/stratton.camera/" target="_blank" rel="noopener"><img src="img/ig.png" loading="lazy" class="icon-img" alt="Stratton Camera on Instagram"></a></li><li><a href="https://www.facebook.com/stratton.camera.inc" target="_blank" rel="noopener"><img src="img/fb.png" loading="lazy" class="icon-img" alt="Stratton Camera on Facebook"></a></li><li><a href="https://www.linkedin.com/company/stratton-camera-inc/" target="_blank" rel="noopener"><img src="img/in.png" loading="lazy" class="icon-img" alt="Stratton Camera on LinkedIn"></a></li><li><a href="https://x.com/strattoncamera/" target="_blank" rel="noopener"><img src="img/x.png" loading="lazy" class="icon-img" alt="Stratton Camera on X"></a></li><li><a href="https://www.esta.org/PERG/" target="_blank" rel="noopener"><img src="img/logo-perg-25.png" loading="lazy" class="icon-img" alt="Production Equipment Rental Group"></a></li><li><a href="coffee"><img src="img/coffee.png" loading="lazy" class="icon-img" alt="Stratton Coffee Department"></a></li></ul></nav><div class="grid col-full"><p class="copyright"><a href="privacy">Privacy Policy</a> | <a href="terms">Terms</a> | <a href="directory">Sitemap</a><br>&copy;&nbsp;1984-2026 Stratton Camera Inc. | All rights reserved</p><hr></div></footer>
 	</div>
 </div>
+<script src="https://player.vimeo.com/api/player.js"></script>
 <script src="js/jq.min.js"></script>
 <script src="js/scripts.js"></script>
-<script src="https://player.vimeo.com/api/player.js"></script>
-<script>document.addEventListener("DOMContentLoaded", function() { var iframe = document.getElementById("heroVideo"); var player = new Vimeo.Player(iframe); var soundButton = document.getElementById("toggleSound"); var overlay = document.getElementById("videoClickOverlay"); var modal = document.getElementById("iframeModal"); var modalIframe = document.getElementById("modaliframe"); player.setVolume(0); soundButton.addEventListener("click", function() { player.getVolume().then(function(volume) { if (volume === 0) { player.setVolume(0.6); soundButton.textContent = "🔇 Sound Off" } else { player.setVolume(0); soundButton.textContent = "🔊 Sound On" } }).catch(function(error) { console.error("Vimeo API error:", error) }) }); overlay.addEventListener("click", function() { player.pause(); modal.style.display = "block"; modalIframe.src = "https://www.youtube.com/embed/G-3WEQzNmsk?si=J9xuFugN_FFgG5Ml"; soundButton.style.display = "none"; }); window.closeiframeModal = function() { modal.style.display = "none"; modalIframe.src = ""; soundButton.style.display = "block"; player.play(); }; });</script>
 <script>window.addEventListener("load",function(){var gtmScript=document.createElement("script");gtmScript.src="https://www.googletagmanager.com/gtag/js?id=G-847H93TJMG";gtmScript.async=true;document.head.appendChild(gtmScript);gtmScript.onload=function(){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","G-847H93TJMG")}});</script>
 <script type="application/ld+json">
 {

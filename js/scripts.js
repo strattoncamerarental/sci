@@ -123,9 +123,16 @@ function closeiframeModal() {
     unlockScroll();
     document.removeEventListener("keydown", closeiframeModalOnEscape);
 
-    // ✅ Resume hero video (Safari-safe)
-    if (window.heroPlayer) {
-        window.heroPlayer.play().catch(() => {});
+    // Resume the autoplay video that opened the modal
+    if (window.activeAutoplayVideo) {
+        const activeVideo = window.activeAutoplayVideo;
+
+        if (activeVideo.soundButton) {
+            activeVideo.soundButton.style.display = "";
+        }
+
+        activeVideo.player.play().catch(() => {});
+        window.activeAutoplayVideo = null;
     }
 }
 // END Modals===============================================
@@ -332,83 +339,117 @@ document.addEventListener("DOMContentLoaded", () => {
 })();
 
 /* ===================================================
-   HERO VIDEO (LCP-safe)
+   AUTOPLAY VIMEO VIDEOS
+   Reusable on any page
    =================================================== */
-const heroIframe = document.getElementById("heroVideo");
-const heroWrap = document.querySelector(".hero-video-wrap");
 
-if (heroIframe && heroWrap && window.Vimeo) {
+const autoplayVideos = [];
 
-    window.heroPlayer = new Vimeo.Player(heroIframe);
+document.querySelectorAll(".autoplay-video").forEach((videoContainer) => {
+    const iframe = videoContainer.querySelector(".autoplay-video-frame");
 
-    // Ensure muted autoplay (Safari-safe)
-    window.heroPlayer.setVolume(0).catch(() => {});
+    if (!iframe || !window.Vimeo) return;
 
-    // Reveal video when first frame is ready (smoother)
-    window.heroPlayer.on("play", () => {
+    const player = new Vimeo.Player(iframe);
+    const soundButton = videoContainer.querySelector(
+        ".autoplay-video-sound"
+    );
+    const overlay = videoContainer.querySelector(
+        ".autoplay-video-overlay"
+    );
+    const modalURL = videoContainer.dataset.modalUrl || "";
+
+    const videoInstance = {
+        player: player,
+        soundButton: soundButton,
+        volumeBeforeHide: 0,
+        wasPlayingBeforeHide: false
+    };
+
+    autoplayVideos.push(videoInstance);
+
+    // Make the first video available to older site functions if needed
+    if (!window.heroPlayer) {
+        window.heroPlayer = player;
+    }
+
+    // Start muted for Safari autoplay
+    player.setVolume(0).catch(() => {});
+
+    // Reveal the Vimeo video after playback begins
+    player.on("play", () => {
         requestAnimationFrame(() => {
-            heroWrap.style.opacity = "1";
+            videoContainer.classList.add("video-ready");
         });
     });
 
     // Sound toggle
-    const soundButton = document.getElementById("toggleSound");
     if (soundButton) {
-        soundButton.addEventListener("click", () => {
-            window.heroPlayer.getVolume().then((v) => {
-                if (v === 0) {
-                    window.heroPlayer.setVolume(0.6);
+        soundButton.addEventListener("click", async() => {
+            try {
+                const volume = await player.getVolume();
+
+                if (volume === 0) {
+                    await player.setVolume(0.6);
                     soundButton.textContent = "🔇 Sound Off";
                 } else {
-                    window.heroPlayer.setVolume(0);
+                    await player.setVolume(0);
                     soundButton.textContent = "🔊 Sound On";
                 }
-            });
+            } catch (error) {}
         });
     }
 
-    // Pause hero and open modal
-    const overlay = document.getElementById("videoClickOverlay");
-    if (overlay) {
+    // Pause autoplay video and open its full video modal
+    if (overlay && modalURL) {
         overlay.addEventListener("click", () => {
-            window.heroPlayer.pause().catch(() => {});
-            openiframeModal("https://player.vimeo.com/video/1068249893");
+            player.pause().catch(() => {});
+
+            window.activeAutoplayVideo = videoInstance;
+
+            if (soundButton) {
+                soundButton.style.display = "none";
+            }
+
+            openiframeModal(modalURL);
         });
     }
+});
 
-    // Pause when hidden; resume when visible again
-    let heroVolumeBeforeHide = 0;
+// Pause hidden videos and resume them when the tab becomes visible
+document.addEventListener("visibilitychange", async() => {
+    for (const video of autoplayVideos) {
+        try {
+            if (document.hidden) {
+                video.volumeBeforeHide = await video.player.getVolume();
+                video.wasPlayingBeforeHide = !(await video.player.getPaused());
 
-    document.addEventListener("visibilitychange", async () => {
-        if (!window.heroPlayer) return;
-
-        if (document.hidden) {
-            try {
-                heroVolumeBeforeHide = await window.heroPlayer.getVolume();
-                await window.heroPlayer.pause();
-            } catch (error) {}
-        } else {
-            try {
-                // Resume muted first so Safari allows playback
-                await window.heroPlayer.setVolume(0);
-                await window.heroPlayer.play();
-
-                // Restore the previous sound setting
-                if (heroVolumeBeforeHide > 0) {
-                    await window.heroPlayer.setVolume(heroVolumeBeforeHide);
+                if (video.wasPlayingBeforeHide) {
+                    await video.player.pause();
                 }
-            } catch (error) {}
-        }
-    });
+            } else if (video.wasPlayingBeforeHide) {
+                // Resume muted first so Safari permits automatic playback
+                await video.player.setVolume(0);
+                await video.player.play();
 
-    // Pause when Safari puts the page into the page cache
-    window.addEventListener("pagehide", () => {
-        if (window.heroPlayer) {
-            window.heroPlayer.pause().catch(() => {});
-        }
-    });
+                // Restore sound if it was previously on
+                if (video.volumeBeforeHide > 0) {
+                    await video.player.setVolume(video.volumeBeforeHide);
+                }
 
-}
+                video.wasPlayingBeforeHide = false;
+            }
+        } catch (error) {}
+    }
+});
+
+// Pause all autoplay videos when Safari caches or unloads the page
+window.addEventListener("pagehide", () => {
+    autoplayVideos.forEach((video) => {
+        video.player.pause().catch(() => {});
+    });
+});
+
 
 // Service Worker: register on all pages that load this script
 if ("serviceWorker" in navigator) {
