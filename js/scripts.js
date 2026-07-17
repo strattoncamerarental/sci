@@ -1,11 +1,3 @@
-// Detect touch devices early
-if ("ontouchstart" in document.documentElement) {
-    document.documentElement.classList.add("touch");
-}
-
-// iOS fix for sticky :hover
-document.addEventListener("touchstart", () => {}, true);
-
 // Track previous page for reliable "Go Back"
 (function() {
     const current = window.location.href;
@@ -231,8 +223,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // Opacity effect — skip for touch devices (unchanged) Triggered by <span> class
-    if (!document.documentElement.classList.contains("touch")) {
+    // Opacity effect — only on devices with true hover support
+    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
         const getSiblingImage = ($el) => {
             let $img = $el.siblings("picture").find("img");
             if (!$img.length) $img = $el.siblings("img");
@@ -464,14 +456,3 @@ if ("serviceWorker" in navigator) {
             });
     });
 }
-
-// Service Worker: Check for updates whenever the app regains focus
-document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "visible" && "serviceWorker" in navigator) {
-        navigator.serviceWorker.getRegistration().then((reg) => {
-            if (reg && typeof reg.update === "function") {
-                reg.update();
-            }
-        });
-    }
-});
