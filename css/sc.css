@@ -388,22 +388,20 @@ header.grid.col-full hr {
 /* ============================================
    MOBILE NAV (HAMBURGER)
 ============================================ */
-/* Mobile hamburger button */
 #nav-toggle {
-    display: none;          /* hidden by default on all sizes */
+    display: none;
     border: none;
     background: transparent;
-    padding: clamp(0.25em, 0.6vw, 0.45em);
+    padding: .5em .6em;
     cursor: pointer;
 }
-/* Hamburger */
-.nav-toggle-icon {	/* styles the 3 lines */
-    display: block;         /* stack vertically */
-    width: clamp(16px, 3vw, 20px); /* (MIN: FLEXIBLE: MAX:) */
+.nav-toggle-icon {
+    display: block;
+    width: 20px;
     height: 2px;
+    margin: 0;
     border-radius: 2px;
     background: #333;
-    margin: clamp(3px, 0.6vw, 4px) 0;
 }
 .nav-toggle-label {
     display: none;
@@ -599,7 +597,7 @@ header nav a img:hover {
     margin-bottom: .5em;
 }
 .logo img {
-    width: 22em;
+    width: 23em;
     height: auto;
     margin-bottom: 1em;
 }
@@ -1705,7 +1703,7 @@ header.site-header::after {
     display: block;
     clear: both;
 }
-  /* Place the hamburger top-right and stack bars vertically */
+  /* Place the hamburger top-right, stack bars and set spacing */
 #nav-toggle.mq2-only {
     display: inline-flex;
     position: absolute;
@@ -1714,8 +1712,9 @@ header.site-header::after {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 4.5px;
 }
-/* Stack footer sections vertically and center them */
+  /* Stack footer sections vertically and center them */
 footer ul {
     text-align: center;
     float: none;
@@ -1724,6 +1723,15 @@ footer ul {
     padding: 0;
     font-size: 0.95em;
     line-height: 1.5em;
+}
+/* Limit and center only the top footer link section */
+footer .footer-links {
+    display: block;
+    float: none;
+    width: 100%;
+    max-width: 45em;
+    margin: 0 auto 1em;
+    text-align: center;
 }
 footer li {
     float: none;
