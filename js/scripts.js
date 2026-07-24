@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
     /* -----------------------------------------
        SEARCH OVERLAY (Path 1)
        ----------------------------------------- */
- /*   const searchTrigger = document.querySelector(".search-trigger");
+    const searchTrigger = document.querySelector(".search-trigger");
     const searchOverlay = document.getElementById("search-overlay");
 
     if (searchTrigger && searchOverlay) {
@@ -222,9 +222,9 @@ document.addEventListener("DOMContentLoaded", () => {
             history.pushState(null, "", url.hash);
         });
     });
-*/
+
     // Opacity effect — only on devices with true hover support
-/*    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
         const getSiblingImage = ($el) => {
             let $img = $el.siblings("picture").find("img");
             if (!$img.length) $img = $el.siblings("img");
@@ -277,7 +277,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }, delay);
     });
 });
-*/
+
 /* ====================================================
    MOBILE HAMBURGER MENU (mq3)
    ==================================================== */
@@ -334,7 +334,7 @@ document.addEventListener("DOMContentLoaded", () => {
    AUTOPLAY VIMEO VIDEOS
    Reusable on any page
    =================================================== */
-/*
+
 const autoplayVideos = [];
 	document.querySelectorAll(".autoplay-video").forEach((videoContainer) => {
     const iframe = videoContainer.querySelector(".autoplay-video-frame");
