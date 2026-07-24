@@ -383,11 +383,6 @@ player.on("error", (e) => {
     // Start muted for Safari autoplay
     player.setVolume(0).catch(() => {});
 
-    // Reveal the Vimeo video after playback begins
-	//player.on("play", () => {
-  //  videoContainer.classList.add("video-ready");
-	//});
-
     // Sound toggle
     if (soundButton) {
         soundButton.addEventListener("click", async() => {
