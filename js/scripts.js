@@ -337,7 +337,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 const autoplayVideos = [];
 
-document.querySelectorAll(".autoplay-video").forEach((videoContainer) => {
+setTimeout(() => {
+	document.querySelectorAll(".autoplay-video").forEach((videoContainer) => {
     const iframe = videoContainer.querySelector(".autoplay-video-frame");
 
     if (!iframe || !window.Vimeo) return;
@@ -441,7 +442,7 @@ window.addEventListener("pagehide", () => {
         video.player.pause().catch(() => {});
     });
 });
-
+}, 1000);
 
 // Service Worker: register on all pages that load this script
 if ("serviceWorker" in navigator) {
