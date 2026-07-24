@@ -369,10 +369,8 @@ const autoplayVideos = [];
 
     // Reveal the Vimeo video after playback begins
     player.on("play", () => {
-        requestAnimationFrame(() => {
-            videoContainer.classList.add("video-ready");
-        });
-    });
+    // disabled for testing
+	});
 
     // Sound toggle
     if (soundButton) {
