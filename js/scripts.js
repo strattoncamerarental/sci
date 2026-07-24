@@ -449,7 +449,7 @@ window.addEventListener("pagehide", () => {
         video.player.pause().catch(() => {});
     });
 });
-*/
+
 // Service Worker: register on all pages that load this script
 if ("serviceWorker" in navigator) {
     window.addEventListener("load", () => {
