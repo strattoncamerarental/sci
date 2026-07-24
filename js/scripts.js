@@ -336,8 +336,6 @@ document.addEventListener("DOMContentLoaded", () => {
    =================================================== */
 
 const autoplayVideos = [];
-
-setTimeout(() => {
 	document.querySelectorAll(".autoplay-video").forEach((videoContainer) => {
     const iframe = videoContainer.querySelector(".autoplay-video-frame");
 
@@ -442,7 +440,6 @@ window.addEventListener("pagehide", () => {
         video.player.pause().catch(() => {});
     });
 });
-}, 1000);
 
 // Service Worker: register on all pages that load this script
 if ("serviceWorker" in navigator) {
