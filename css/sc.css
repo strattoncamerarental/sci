@@ -746,7 +746,7 @@ header nav a img:hover {
 }
 .hero-poster {
   z-index: 1;
-  transition: opacity 350ms ease;
+  transition: none;
 }
 .hero-media.video-ready .hero-poster {
   opacity: 0;
@@ -758,7 +758,7 @@ header nav a img:hover {
   position: absolute;
   inset: 0;
   opacity: 0;
-  transition: opacity 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: none;
   z-index: 2;
 }
 .hero-video-wrap iframe {
