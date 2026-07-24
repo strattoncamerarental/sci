@@ -368,8 +368,8 @@ const autoplayVideos = [];
     player.setVolume(0).catch(() => {});
 
     // Reveal the Vimeo video after playback begins
-    player.on("play", () => {
-    // disabled for testing
+	player.on("play", () => {
+    videoContainer.classList.add("video-ready");
 	});
 
     // Sound toggle
