@@ -342,6 +342,22 @@ const autoplayVideos = [];
     if (!iframe || !window.Vimeo) return;
 
     const player = new Vimeo.Player(iframe);
+    player.ready().then(() => {
+    console.log("READY");
+});
+
+player.on("play", () => {
+    console.log("PLAY");
+    videoContainer.classList.add("video-ready");
+});
+
+player.on("playing", () => {
+    console.log("PLAYING");
+});
+
+player.on("error", (e) => {
+    console.log("VIMEO ERROR", e);
+});
     const soundButton = videoContainer.querySelector(
         ".autoplay-video-sound"
     );
@@ -368,9 +384,9 @@ const autoplayVideos = [];
     player.setVolume(0).catch(() => {});
 
     // Reveal the Vimeo video after playback begins
-	player.on("play", () => {
-    videoContainer.classList.add("video-ready");
-	});
+	//player.on("play", () => {
+  //  videoContainer.classList.add("video-ready");
+	//});
 
     // Sound toggle
     if (soundButton) {
