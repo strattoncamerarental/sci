@@ -350,15 +350,10 @@ header nav ul {
 	opacity: 1;
 }
 
-.used-modal-close:active {
-	position: absolute;
-	top: 1em;
-}
-
+.used-modal-close:active,
 .used-modal-prev:active,
 .used-modal-next:active {
 	position: absolute;
-	top: 50%;
 }
 
 .used-modal-close {
