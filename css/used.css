@@ -347,7 +347,7 @@ header nav ul {
 	border: 0 !important;
 	box-shadow: none !important;
 	color: #fff !important;
-	opacity: 1;
+	opacity: 0.75;
 }
 
 .used-modal-close:active {
