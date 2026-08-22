@@ -414,6 +414,8 @@ header nav ul {
 	.used-modal-next:hover {
 		top: 50% !important;
 		transform: translateY(-50%) !important;
+		background: rgba(0, 0, 0, 0.45) !important;
+		color: #fff !important;
 	}
 
 	.used-modal-prev {
