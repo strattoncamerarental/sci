@@ -1,0 +1,440 @@
+/* =========================================================
+   USED EQUIPMENT STYLING
+   ========================================================= */
+
+header nav ul {
+    text-transform: none;
+    font-size: 1.05em;
+}
+
+.navactive {
+	text-transform: uppercase;
+	font-size: .95em;
+}
+
+/* -- Catalog layout
+------------------------------------------------------------- */
+
+.used-catalog {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(275px, 1fr));
+	gap: 2.5em 1em;
+}
+
+.used-catalog > section {
+	grid-column: 1 / -1;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(275px, 1fr));
+	gap: 2.5em 1em;
+}
+
+.used-catalog-aks > section {
+	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.used-category-heading {
+	grid-column: 1 / -1;
+	margin: 0;
+	padding-top: .75em;
+	border-top: 1px solid #ddd;
+	font-size: 1.5em;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
+.top-of-page {
+	grid-column: 1 / -1;
+	text-align: center;
+}
+
+.used-catalog > .top-of-page {
+	margin: -1.4em 0;
+}
+
+
+/* -- Individual item
+------------------------------------------------------------- */
+
+.used-item {
+	min-width: 0;
+}
+
+.used-item ul {
+	margin: 0.75em 0 0 2em;
+	font-size: .9em;
+	line-height: 1.35;
+}
+
+.used-item .used-heading h2 {
+	font-size: 1.3em;
+	margin: 0;
+}
+
+.used-item .used-heading h3 {
+	margin: 0;
+}
+
+.used-heading .used-price {
+	margin: 0;
+	white-space: nowrap;
+}
+
+
+/* -- Gallery
+------------------------------------------------------------- */
+
+.used-gallery-main {
+	position: relative;
+	overflow: hidden;
+	display: block;
+	width: 100%;
+	padding: 0;
+	border: 0;
+	background: none;
+}
+
+.used-gallery-main::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: url("../img/zoomin.png") no-repeat center;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity .25s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+	.used-gallery-main:hover::after {
+		opacity: 1;
+	}
+
+	.used-gallery-main:hover img {
+		opacity: 0.7;
+	}
+}
+
+.used-gallery-main img {
+	display: block;
+	width: 100%;
+	aspect-ratio: 2 / 1;
+	object-fit: contain;
+	transition: opacity .25s ease;
+}
+
+.used-thumbnails {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5em;
+	margin-top: 0.5em;
+}
+
+.used-thumbnail {
+	width: clamp(60px, 22%, 80px);
+	border: 1px solid transparent;
+	padding: 2px;
+	background: none;
+	cursor: pointer;
+	opacity: 0.65;
+	transition: opacity .2s ease, border-color .2s ease;
+}
+
+.used-thumbnail:hover {
+	opacity: 1;
+}
+
+.used-thumbnail.active {
+	border-color: #555;
+	opacity: 1;
+}
+
+.used-thumbnail img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+.sold-item .used-gallery,
+.sold-item > ul {
+	opacity: 0.55;
+}
+
+.sold-item .used-heading h2 {
+	opacity: 0.65;
+}
+
+
+/* -- Price / status
+------------------------------------------------------------- */
+
+.used-price {
+	margin-top: 0.25em;
+	font-weight: 700;
+	color: #C00;
+}
+
+.used-price.sold,
+.used-price.pending {
+	text-transform: uppercase;
+}
+
+
+/* -- Note
+------------------------------------------------------------- */
+
+.used-note {
+	font-size: .85em;
+	font-weight: 500;
+}
+
+
+
+/* -- Inquiry
+------------------------------------------------------------- */
+
+.used-inquire, .used-details-link {
+	display: inline-block;
+	margin-top: 0.5em;
+}
+
+.used-details-link {
+	text-transform: uppercase;
+	font-weight: 700;
+}
+
+.used-details-link::after {
+	content: "";
+	display: inline-block;
+	width: .65em;
+	height: .75em;
+	margin-left: .35em;
+	background: url("../img/arrow-ne.svg") center / contain no-repeat;
+}
+
+
+/* -- Individual product pages
+------------------------------------------------------------- */
+
+.used-product-price {
+	margin-bottom: .5em;
+	font-size: 1.4em;
+	font-weight: 700;
+	color: #C00;
+}
+
+.used-product-images {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 1em;
+}
+
+.used-product-images img {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+.used-product-thumbnails {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(60px, 90px));
+	justify-content: center;
+	gap: .75em;
+	margin-top: 1em;
+}
+
+.used-includes {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 1em;
+}
+
+.used-includes ul {
+	list-style-type: disc;
+	list-style-position: outside;
+	padding-left: 1.5em;
+}
+
+.used-includes li {
+	list-style: disc;
+}
+
+.used-includes li::marker {
+	font-size: .75em;
+}
+
+.used-product-info {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 2em;
+	margin-top: 2em;
+}
+
+
+/* -- Image modal
+------------------------------------------------------------- */
+
+.used-modal {
+	position: fixed;
+	inset: 0;
+	z-index: 2000;
+	display: none;
+	align-items: center;
+	justify-content: center;
+	padding: 2em;
+	background: rgba(0, 0, 0, 0.75);
+}
+
+.used-modal.is-open {
+	display: flex;
+}
+
+.used-modal-content {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 80vw;
+	height: 100%;
+}
+
+.used-modal-image {
+	position: relative;
+	z-index: 1;
+	display: block;
+	width: 100%;
+	max-width: 100%;
+	max-height: 80vh;
+	height: auto;
+	object-fit: contain;
+}
+
+
+/* Modal controls */
+
+.used-modal-close,
+.used-modal-prev,
+.used-modal-next {
+	position: absolute;
+	z-index: 10;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-radius: 0;
+	background: transparent;
+	box-shadow: none;
+	color: #fff;
+	text-shadow: none;
+	cursor: pointer;
+	opacity: 0.75;
+	transition: opacity .2s ease;
+}
+
+
+/* Override global button states in sc.css */
+
+.used-modal-close:hover,
+.used-modal-prev:hover,
+.used-modal-next:hover,
+.used-modal-close:focus,
+.used-modal-prev:focus,
+.used-modal-next:focus {
+	opacity: 1;
+	color: #fddf00;
+}
+
+.used-modal-close:active,
+.used-modal-prev:active,
+.used-modal-next:active {
+	position: absolute;
+	background: transparent;
+	border: 0;
+	color: #fff;
+	opacity: 1;
+}
+
+.used-modal-close:active {
+	top: 1em;
+}
+
+.used-modal-prev:active,
+.used-modal-next:active {
+	top: 50%;
+}
+
+.used-modal-close {
+	top: 1em;
+	right: 1em;
+	width: 44px;
+	height: 44px;
+	font-size: 2.5em;
+	line-height: 1;
+}
+
+.used-modal-prev,
+.used-modal-next {
+	top: 50%;
+	width: 60px;
+	height: 80px;
+	transform: translateY(-50%);
+	font-size: 3em;
+	line-height: 1;
+}
+
+.used-modal-prev {
+	left: -70px;
+}
+
+.used-modal-next {
+	right: -70px;
+}
+
+.used-modal-count {
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	color: #fff;
+	font-size: 0.9em;
+}
+
+
+/* -- Responsive
+------------------------------------------------------------- */
+@media (max-width: 625px) {
+	.used-catalog {
+		grid-template-columns: 1fr;
+		gap: 2.5em;
+	}
+
+	.used-modal {
+		padding: 1em;
+	}
+
+	.used-modal-prev,
+	.used-modal-next {
+		z-index: 20;
+		width: 34px;
+		height: 50px;
+		background: rgba(0, 0, 0, 0.45);
+	}
+
+	.used-modal-prev {
+		left: 0;
+	}
+
+	.used-modal-next {
+		right: 0;
+	}
+	
+	.used-product-info {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: 480px) {
+	.used-includes {
+		grid-template-columns: 1fr;
+	}
+}

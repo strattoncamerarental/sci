@@ -63,10 +63,10 @@
     box-sizing: border-box;
 }
 html {
-    font-size: 100%;
+    font-size: 100%; /* normally 16px */
     -webkit-text-size-adjust: 100%; /* For iOS/macOS */
 }
-body, form, ul, ol, li, h5, figure, fieldset, button, input, select, textarea  {
+body, form, ul, ol, li, figure, fieldset, button, input, select, textarea  {
     margin: 0;
 }
 ul, ol, li {
@@ -371,7 +371,7 @@ header.grid.col-full hr {
 @media (hover: hover) and (pointer: fine) {
   .top-button:hover {
       color: #fff;
-      background: #000;
+      background: #505050;
   }
   .top-button:hover::before {
       text-decoration: underline;
@@ -826,7 +826,7 @@ header nav a img:hover {
     justify-content: center;
     margin: 0;
 }     
-/* Lens menu section headings (PRIME / ZOOM) */
+/* Lens menu section headings (PRIME / ZOOM / EXPENDABLES / USED AKS) */
 .lens-menu .lens-heading-item {
     flex-basis: 100%;       /* full-width row in the flex menu */
     background: none;
@@ -1618,14 +1618,6 @@ ul.grid li h3 {
 .price {
     float: right;
 }    
-/* ==========================
-   USED PAGES
-   ========================== */
-.used-price {
-	font-size:1.1em;
-	font-weight:600;
-	color:#C00;
-}
 @media (max-width: 480px) {
   .lp-list li {
     grid-template-columns: 1fr auto;
@@ -1755,7 +1747,7 @@ body.nav-open #mobile-nav {
     position: absolute;
     top: 0;       /* start at top of header */
     right: 2rem;  /* stay aligned with hamburger */
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.9);
     -webkit-backdrop-filter: blur(2px);
     backdrop-filter: blur(2px);
     padding: 0.4em 0.5em;

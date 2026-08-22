@@ -176,7 +176,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         document.addEventListener("keydown", (e) => {
-            if (e.key === "Escape") {
+            if (e.key === "Escape" && searchOverlay.classList.contains("active")) {
                 if (searchInput) searchInput.blur();
                 searchOverlay.classList.remove("active");
                 unlockScroll();
