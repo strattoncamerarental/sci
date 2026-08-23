@@ -15,18 +15,91 @@
 	transform-origin: left center;
 }
 
-
 /* -- Used-site navigation
 ------------------------------------------------------------- */
 
-header nav ul {
-    text-transform: none;
-    font-size: 1.05em;
-}
-
 .navactive {
 	text-transform: uppercase;
-	font-size: .95em;
+}
+
+header.site-header {
+	position: relative;
+	overflow: visible;
+	padding-bottom: .5em;
+}
+
+header.site-header::after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+#nav-toggle.mq2-only {
+	display: inline-flex;
+	position: absolute;
+	top: .3em;
+	right: 0;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 4.5px;
+}
+
+body.nav-open #mobile-nav {
+	display: block;
+	position: absolute;
+	top: 0;
+	right: 2rem;
+	background: rgba(255, 255, 255, .9);
+	-webkit-backdrop-filter: blur(2px);
+	backdrop-filter: blur(2px);
+	padding: .4em .5em;
+	border-radius: 3px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, .15);
+	z-index: 8;
+	width: auto;
+	min-width: 8rem;
+}
+
+#mobile-nav ul {
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+	gap: .1em;
+}
+
+#mobile-nav li {
+	border: 0;
+}
+
+#mobile-nav a {
+	display: block;
+	padding: .25em 0;
+	font-size: .9rem;
+	letter-spacing: -.02em;
+	font-weight: 600;
+	color: #222;
+	text-decoration: none;
+	text-transform: none;
+}
+
+#mobile-nav a:hover {
+	color: var(--primary-color);
+	text-decoration: underline;
+}
+
+#mobile-nav .menu-section {
+	margin: .4em 0 0 1em;
+	padding-top: .3em;
+	border-top: 2px solid #ddd;
+	font-size: .65rem;
+	letter-spacing: -.03em;
+	color: #777;
+	font-weight: 600;
+}
+
+#mobile-nav {
+	text-transform: none;
 }
 
 /* -- Catalog layout
