@@ -2,6 +2,22 @@
    USED EQUIPMENT STYLING
    ========================================================= */
 
+.used-logo-tagline {
+	display: block;
+	margin: -1.4em 0 1em .22em;
+	color: #666;
+	font-size: .85em;
+	font-weight: 400;
+	letter-spacing: .14em;
+	text-transform: uppercase;
+	white-space: nowrap;
+	transform: scaleY(.93);
+	transform-origin: left center;
+}
+
+/* -- Used-site navigation
+------------------------------------------------------------- */
+
 header nav ul {
     text-transform: none;
     font-size: 1.05em;
