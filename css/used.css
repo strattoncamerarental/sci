@@ -20,6 +20,57 @@
 	text-decoration: none;
 }
 
+.used-index-grid {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	gap: 1em;
+}
+
+.used-index {
+	margin: .75em 0 0;
+	padding-left: 1.2em;
+	font-size: .9em;
+	line-height: 1.35;
+}
+
+.used-index li {
+	position: relative;
+	margin-bottom: .3em;
+	list-style: none;
+}
+
+.used-index li::before {
+	content: "•";
+	position: absolute;
+	left: -1.2em;
+	top: .5em;
+	font-size: .7em;
+}
+
+.used-index-grid figure > a {
+	display: block;
+	width: 100%;
+	overflow: hidden;
+	position: relative;
+	border-top: 1px solid #DDD;
+	padding-top: .75em;
+}
+
+.used-index-grid figure figcaption {
+	margin-top: .5em;
+	white-space: nowrap;
+}
+
+.used-index-grid figure figcaption a {
+	line-height: 2em;
+	color: #555;
+	font-weight: 700;
+}
+
+.used-index-grid figure figcaption p {
+	margin: 0;
+}
+
 /* -- Used-site navigation
 ------------------------------------------------------------- */
 
@@ -288,7 +339,6 @@ body.nav-open #mobile-nav {
 }
 
 
-
 /* -- Inquiry
 ------------------------------------------------------------- */
 
@@ -298,7 +348,7 @@ body.nav-open #mobile-nav {
 }
 
 .used-inquire {
-	font-size: .9em;
+	font-size: .85em;
 }
 
 .used-details-link {
@@ -535,6 +585,13 @@ body.nav-open #mobile-nav {
 
 /* -- Responsive
 ------------------------------------------------------------- */
+@media (max-width: 700px) {
+	.used-index-grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+
 @media (max-width: 625px) {
 	.used-catalog {
 		grid-template-columns: 1fr;
