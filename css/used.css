@@ -248,6 +248,12 @@ body.nav-open #mobile-nav {
 	height: auto;
 }
 
+.used-list-heading {
+	margin: 0.5em 0 0.2em;
+	font-size: 0.95em;
+	font-weight: 700;
+}
+
 .sold-item .used-gallery,
 .sold-item > ul {
 	opacity: 0.55;
@@ -291,6 +297,10 @@ body.nav-open #mobile-nav {
 	margin-top: 0.5em;
 }
 
+.used-inquire {
+	font-size: .9em;
+}
+
 .used-details-link {
 	text-transform: uppercase;
 	font-weight: 700;
@@ -302,7 +312,7 @@ body.nav-open #mobile-nav {
 	width: .65em;
 	height: .75em;
 	margin-left: .35em;
-	background: url("../img/arrow-ne.svg") center / contain no-repeat;
+	background: url("../img/arrow-right.svg") center / contain no-repeat;
 }
 
 
