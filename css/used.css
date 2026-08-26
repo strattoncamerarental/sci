@@ -65,6 +65,7 @@
 	line-height: 2em;
 	color: #555;
 	font-weight: 700;
+	text-transform: uppercase;
 }
 
 .used-index-grid figure figcaption p {
