@@ -306,13 +306,19 @@ body.nav-open #mobile-nav {
 	font-weight: 700;
 }
 
+.sold-item {
+	background: #f2f2f2;
+	padding: .5em;
+	border: 1px solid #ddd;
+}
+
 .sold-item .used-gallery,
 .sold-item > ul {
-	opacity: 0.55;
+	opacity: 0.7;
 }
 
 .sold-item .used-heading h2 {
-	opacity: 0.65;
+	opacity: 0.7;
 }
 
 
