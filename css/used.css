@@ -306,21 +306,6 @@ body.nav-open #mobile-nav {
 	font-weight: 700;
 }
 
-.sold-item {
-	background: #f2f2f2;
-	padding: .5em;
-	border: 1px solid #ddd;
-}
-
-.sold-item .used-gallery,
-.sold-item > ul {
-	opacity: 0.7;
-}
-
-.sold-item .used-heading h2 {
-	opacity: 0.7;
-}
-
 
 /* -- Price / status
 ------------------------------------------------------------- */
@@ -334,6 +319,21 @@ body.nav-open #mobile-nav {
 .used-price.sold,
 .used-price.pending {
 	text-transform: uppercase;
+}
+
+.sold-item {
+	background: #f2f2f2;
+	padding: .6em;
+	border: 1px solid #ccc;
+}
+
+.sold-item .used-gallery,
+.sold-item > ul {
+	opacity: 0.7;
+}
+
+.sold-item .used-heading h2 {
+	opacity: 0.7;
 }
 
 
