@@ -542,7 +542,8 @@ body.nav-open #mobile-nav {
 	top: 50%;
 }
 
-.used-modal-close {
+.used-modal-close,
+.video-modal-close {
 	top: 2em;
 	right: 1em;
 	width: auto;
