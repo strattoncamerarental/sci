@@ -276,12 +276,6 @@ modalClose?.addEventListener('click', closeModal);
 modalPrev?.addEventListener('click', previousImage);
 modalNext?.addEventListener('click', nextImage);
 
-modal?.addEventListener('click', event => {
-	if (event.target === modal) {
-		closeModal();
-	}
-});
-
 
 /* -- Keyboard controls
 ------------------------------------------------------------- */

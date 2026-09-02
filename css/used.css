@@ -470,17 +470,6 @@ body.nav-open #mobile-nav {
 	object-fit: contain;
 }
 
-.used-modal-image {
-	position: relative;
-	z-index: 1;
-	display: block;
-	width: 100%;
-	max-width: 100%;
-	max-height: 80vh;
-	height: auto;
-	object-fit: contain;
-}
-
 /* Image zoom / pan */
 
 .used-modal-content {
@@ -544,7 +533,7 @@ body.nav-open #mobile-nav {
 
 .used-modal-close:active {
 	position: absolute;
-	top: 1em;
+	top: 2em;
 }
 
 .used-modal-prev:active,
@@ -554,11 +543,14 @@ body.nav-open #mobile-nav {
 }
 
 .used-modal-close {
-	top: 1em;
+	top: 2em;
 	right: 1em;
-	width: 44px;
+	width: auto;
 	height: 44px;
-	font-size: 2.5em;
+	padding: 0 .5em;
+	font-size: 1.1em;
+	font-weight: 700;
+	letter-spacing: .05em;
 	line-height: 1;
 }
 
@@ -582,7 +574,7 @@ body.nav-open #mobile-nav {
 
 .used-modal-count {
 	position: absolute;
-	bottom: 0;
+	bottom: .5em;
 	left: 50%;
 	transform: translateX(-50%);
 	color: #fff;
