@@ -12,6 +12,103 @@ const modalCount = modal?.querySelector('.used-modal-count');
 let currentImages = [];
 let currentIndex = 0;
 
+/* -- Image zoom / pan
+------------------------------------------------------------- */
+
+let imageScale = 1;
+let imageX = 0;
+let imageY = 0;
+
+let startDistance = 0;
+let startScale = 1;
+
+let startX = 0;
+let startY = 0;
+let startImageX = 0;
+let startImageY = 0;
+
+let isPanning = false;
+let isPinching = false;
+
+modalImage?.addEventListener('touchstart', event => {
+	if (event.touches.length === 2) {
+		isPinching = true;
+		isPanning = false;
+
+		startDistance = touchDistance(
+			event.touches[0],
+			event.touches[1]
+		);
+
+		startScale = imageScale;
+	}
+
+	else if (event.touches.length === 1 && imageScale > 1) {
+		isPanning = true;
+
+		startX = event.touches[0].clientX;
+		startY = event.touches[0].clientY;
+
+		startImageX = imageX;
+		startImageY = imageY;
+	}
+}, { passive: false });
+
+
+modalImage?.addEventListener('touchmove', event => {
+	if (isPinching && event.touches.length === 2) {
+		event.preventDefault();
+
+		const distance = touchDistance(
+			event.touches[0],
+			event.touches[1]
+		);
+
+		imageScale = Math.min(
+			4,
+			Math.max(1, startScale * distance / startDistance)
+		);
+
+		if (imageScale === 1) {
+			imageX = 0;
+			imageY = 0;
+		}
+
+		applyImageTransform();
+	}
+
+	else if (isPanning && event.touches.length === 1) {
+		event.preventDefault();
+
+		imageX =
+			startImageX +
+			event.touches[0].clientX -
+			startX;
+
+		imageY =
+			startImageY +
+			event.touches[0].clientY -
+			startY;
+
+		applyImageTransform();
+	}
+}, { passive: false });
+
+
+modalImage?.addEventListener('touchend', event => {
+	if (event.touches.length < 2) {
+		isPinching = false;
+	}
+
+	if (event.touches.length === 0) {
+		isPanning = false;
+
+		if (imageScale <= 1) {
+			resetImageZoom();
+		}
+	}
+});
+
 
 /* -- Galleries
 ------------------------------------------------------------- */
@@ -121,6 +218,8 @@ function closeModal() {
 
 
 function updateModal() {
+	resetImageZoom();
+
 	modalImage.src = currentImages[currentIndex];
 
 	modalCount.textContent =
@@ -143,6 +242,32 @@ function nextImage() {
 	updateModal();
 }
 
+/* -- Image zoom / pan
+------------------------------------------------------------- */
+
+function applyImageTransform() {
+	modalImage.style.transform =
+		`translate(${imageX}px, ${imageY}px) scale(${imageScale})`;
+}
+
+
+function resetImageZoom() {
+	imageScale = 1;
+	imageX = 0;
+	imageY = 0;
+	isPanning = false;
+	isPinching = false;
+
+	applyImageTransform();
+}
+
+
+function touchDistance(touch1, touch2) {
+	const x = touch2.clientX - touch1.clientX;
+	const y = touch2.clientY - touch1.clientY;
+
+	return Math.hypot(x, y);
+}
 
 /* -- Modal controls
 ------------------------------------------------------------- */
@@ -152,13 +277,9 @@ modalPrev?.addEventListener('click', previousImage);
 modalNext?.addEventListener('click', nextImage);
 
 modal?.addEventListener('click', event => {
-    if (
-        event.target === modalPrev ||
-        event.target === modalNext ||
-        event.target === modalClose
-    ) return;
-
-    closeModal();
+	if (event.target === modal) {
+		closeModal();
+	}
 });
 
 
