@@ -607,7 +607,16 @@ body.nav-open #mobile-nav {
 	}
 
 	.used-modal {
-		padding: 1em;
+
+		padding: 0;
+	}
+	.used-modal-content {
+		width: 100vw;
+	}
+	.used-modal-image {
+		width: 100vw;
+		max-width: 100vw;
+		max-height: 90vh;
 	}
 
 	.used-modal-prev,
