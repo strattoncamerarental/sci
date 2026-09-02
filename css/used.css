@@ -347,6 +347,19 @@ body.nav-open #mobile-nav {
 }
 
 
+/* -- Video Link
+------------------------------------------------------------- */
+.used-yt::after {
+	content: "";
+	display: inline-block;
+	width: 18px;
+	height: 13px;
+	margin-left: .4em;
+	background: url("../img/yt1.png") center / contain no-repeat;
+	vertical-align: -2px;
+}
+
+
 /* -- Inquiry
 ------------------------------------------------------------- */
 
