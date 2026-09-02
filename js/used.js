@@ -30,6 +30,9 @@ let startImageY = 0;
 let isPanning = false;
 let isPinching = false;
 
+let swipeStartX = 0;
+let swipeStartY = 0;
+
 modalImage?.addEventListener('touchstart', event => {
 	if (event.touches.length === 2) {
 		isPinching = true;
@@ -43,15 +46,20 @@ modalImage?.addEventListener('touchstart', event => {
 		startScale = imageScale;
 	}
 
-	else if (event.touches.length === 1 && imageScale > 1) {
-		isPanning = true;
+else if (event.touches.length === 1) {
+	startX = event.touches[0].clientX;
+	startY = event.touches[0].clientY;
 
-		startX = event.touches[0].clientX;
-		startY = event.touches[0].clientY;
+	swipeStartX = startX;
+	swipeStartY = startY;
+
+	if (imageScale > 1) {
+		isPanning = true;
 
 		startImageX = imageX;
 		startImageY = imageY;
 	}
+}
 }, { passive: false });
 
 
@@ -101,6 +109,25 @@ modalImage?.addEventListener('touchend', event => {
 	}
 
 	if (event.touches.length === 0) {
+		const touch = event.changedTouches[0];
+
+		if (!isPanning && imageScale === 1 && touch) {
+			const deltaX = touch.clientX - swipeStartX;
+			const deltaY = touch.clientY - swipeStartY;
+
+			if (
+				Math.abs(deltaX) > 50 &&
+				Math.abs(deltaX) > Math.abs(deltaY)
+			) {
+				if (deltaX < 0) {
+					nextImage();
+				}
+				else {
+					previousImage();
+				}
+			}
+		}
+
 		isPanning = false;
 
 		if (imageScale <= 1) {
