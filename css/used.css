@@ -484,7 +484,6 @@ body.nav-open #mobile-nav {
 /* Image zoom / pan */
 
 .used-modal-content {
-	overflow: hidden;
 	touch-action: none;
 }
 
