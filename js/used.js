@@ -12,130 +12,6 @@ const modalCount = modal?.querySelector('.used-modal-count');
 let currentImages = [];
 let currentIndex = 0;
 
-/* -- Image zoom / pan
-------------------------------------------------------------- */
-
-let imageScale = 1;
-let imageX = 0;
-let imageY = 0;
-
-let startDistance = 0;
-let startScale = 1;
-
-let startX = 0;
-let startY = 0;
-let startImageX = 0;
-let startImageY = 0;
-
-let isPanning = false;
-let isPinching = false;
-
-let swipeStartX = 0;
-let swipeStartY = 0;
-
-modalImage?.addEventListener('touchstart', event => {
-	if (event.touches.length === 2) {
-		isPinching = true;
-		isPanning = false;
-
-		startDistance = touchDistance(
-			event.touches[0],
-			event.touches[1]
-		);
-
-		startScale = imageScale;
-	}
-
-else if (event.touches.length === 1) {
-	startX = event.touches[0].clientX;
-	startY = event.touches[0].clientY;
-
-	swipeStartX = startX;
-	swipeStartY = startY;
-
-	if (imageScale > 1) {
-		isPanning = true;
-
-		startImageX = imageX;
-		startImageY = imageY;
-	}
-}
-}, { passive: false });
-
-
-modalImage?.addEventListener('touchmove', event => {
-	if (isPinching && event.touches.length === 2) {
-		event.preventDefault();
-
-		const distance = touchDistance(
-			event.touches[0],
-			event.touches[1]
-		);
-
-		imageScale = Math.min(
-			4,
-			Math.max(1, startScale * distance / startDistance)
-		);
-
-		if (imageScale === 1) {
-			imageX = 0;
-			imageY = 0;
-		}
-
-		applyImageTransform();
-	}
-
-	else if (isPanning && event.touches.length === 1) {
-		event.preventDefault();
-
-		imageX =
-			startImageX +
-			event.touches[0].clientX -
-			startX;
-
-		imageY =
-			startImageY +
-			event.touches[0].clientY -
-			startY;
-
-		applyImageTransform();
-	}
-}, { passive: false });
-
-
-modalImage?.addEventListener('touchend', event => {
-	if (event.touches.length < 2) {
-		isPinching = false;
-	}
-
-	if (event.touches.length === 0) {
-		const touch = event.changedTouches[0];
-
-		if (!isPanning && imageScale === 1 && touch) {
-			const deltaX = touch.clientX - swipeStartX;
-			const deltaY = touch.clientY - swipeStartY;
-
-			if (
-				Math.abs(deltaX) > 50 &&
-				Math.abs(deltaX) > Math.abs(deltaY)
-			) {
-				if (deltaX < 0) {
-					nextImage();
-				}
-				else {
-					previousImage();
-				}
-			}
-		}
-
-		isPanning = false;
-
-		if (imageScale <= 1) {
-			resetImageZoom();
-		}
-	}
-});
-
 
 /* -- Galleries
 ------------------------------------------------------------- */
@@ -179,6 +55,7 @@ document.querySelectorAll('.used-gallery').forEach(gallery => {
 		openModal();
 	});
 });
+
 
 /* -- Individual product galleries
 ------------------------------------------------------------- */
@@ -269,8 +146,28 @@ function nextImage() {
 	updateModal();
 }
 
-/* -- Image zoom / pan
+
+/* -- Image zoom / pan / swipe
 ------------------------------------------------------------- */
+
+let imageScale = 1;
+let imageX = 0;
+let imageY = 0;
+
+let startDistance = 0;
+let startScale = 1;
+
+let startX = 0;
+let startY = 0;
+let startImageX = 0;
+let startImageY = 0;
+
+let isPanning = false;
+let isPinching = false;
+
+let swipeStartX = 0;
+let swipeStartY = 0;
+
 
 function applyImageTransform() {
 	modalImage.style.transform =
@@ -296,12 +193,129 @@ function touchDistance(touch1, touch2) {
 	return Math.hypot(x, y);
 }
 
+
+modalImage?.addEventListener('touchstart', event => {
+	if (event.touches.length === 2) {
+		isPinching = true;
+		isPanning = false;
+
+		startDistance = touchDistance(
+			event.touches[0],
+			event.touches[1]
+		);
+
+		startScale = imageScale;
+	}
+
+	else if (event.touches.length === 1) {
+		startX = event.touches[0].clientX;
+		startY = event.touches[0].clientY;
+
+		swipeStartX = startX;
+		swipeStartY = startY;
+
+		if (imageScale > 1) {
+			isPanning = true;
+
+			startImageX = imageX;
+			startImageY = imageY;
+		}
+	}
+}, { passive: false });
+
+
+modalImage?.addEventListener('touchmove', event => {
+	if (isPinching && event.touches.length === 2) {
+		event.preventDefault();
+
+		const distance = touchDistance(
+			event.touches[0],
+			event.touches[1]
+		);
+
+		imageScale = Math.min(
+			4,
+			Math.max(1, startScale * distance / startDistance)
+		);
+
+		if (imageScale === 1) {
+			imageX = 0;
+			imageY = 0;
+		}
+
+		applyImageTransform();
+	}
+
+	else if (isPanning && event.touches.length === 1) {
+		event.preventDefault();
+
+		imageX =
+			startImageX +
+			event.touches[0].clientX -
+			startX;
+
+		imageY =
+			startImageY +
+			event.touches[0].clientY -
+			startY;
+
+		applyImageTransform();
+	}
+}, { passive: false });
+
+
+modalImage?.addEventListener('touchend', event => {
+	if (event.touches.length < 2) {
+		isPinching = false;
+	}
+
+	if (event.touches.length === 0) {
+		const touch = event.changedTouches[0];
+
+		if (!isPanning && imageScale === 1 && touch) {
+			const deltaX = touch.clientX - swipeStartX;
+			const deltaY = touch.clientY - swipeStartY;
+
+			if (
+				Math.abs(deltaX) > 50 &&
+				Math.abs(deltaX) > Math.abs(deltaY)
+			) {
+				if (deltaX < 0) {
+					nextImage();
+				}
+				else {
+					previousImage();
+				}
+			}
+		}
+
+		isPanning = false;
+
+		if (imageScale <= 1) {
+			resetImageZoom();
+		}
+	}
+});
+
+
 /* -- Modal controls
 ------------------------------------------------------------- */
 
 modalClose?.addEventListener('click', closeModal);
 modalPrev?.addEventListener('click', previousImage);
 modalNext?.addEventListener('click', nextImage);
+
+modal?.addEventListener('click', event => {
+	if (
+		event.target === modalImage ||
+		event.target === modalPrev ||
+		event.target === modalNext ||
+		event.target === modalClose ||
+		modalClose?.contains(event.target)
+	) return;
+
+	closeModal();
+});
 
 
 /* -- Keyboard controls
