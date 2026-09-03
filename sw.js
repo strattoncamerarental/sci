@@ -18,7 +18,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // VERSIONED CACHES
 ////////////////////////////////////////////////////////////////////////////////
-const SW_VERSION = 'v17.4';
+const SW_VERSION = 'v17.5';
 
 const PRECACHE = `precache-${SW_VERSION}`;
 const RUNTIME  = `runtime-${SW_VERSION}`;
@@ -29,7 +29,9 @@ const RUNTIME  = `runtime-${SW_VERSION}`;
 const PRECACHE_URLS = [
   '/css/sc.css',
   '/css/slideshow.css',
+  '/css/used.css',
   '/js/scripts.js',
+  '/js/used.js',
   '/js/jq.min.js',
   '/site.webmanifest',
   '/favicon.ico'
