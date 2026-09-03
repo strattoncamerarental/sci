@@ -240,14 +240,17 @@ body.nav-open #mobile-nav {
 	background: none;
 }
 
-.used-gallery-main::after {
+.used-gallery-main::before {
 	content: "";
 	position: absolute;
-	inset: 0;
-	background: url("../img/zoomin.png") no-repeat center;
-	opacity: 0;
+	top: .4em;
+	right: .4em;
+	z-index: 2;
+	width: 23px;
+	height: 23px;
+	background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238c8c8c' stroke-width='1.6' stroke-linecap='round'%3E%3Ccircle cx='10' cy='10' r='6.5'/%3E%3Cpath d='M15 15L21 21'/%3E%3Cpath d='M10 7v6M7 10h6'/%3E%3C/svg%3E")
+	center / contain no-repeat;
 	pointer-events: none;
-	transition: opacity .25s ease;
 }
 
 @media (hover: hover) and (pointer: fine) {
