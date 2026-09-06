@@ -72,6 +72,20 @@
 	margin: 0;
 }
 
+.lens-menu-used a {
+    text-decoration-style: solid;
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: .15em;
+}
+
+.lens-menu-used .lens-menu-label { /* --- for JUMP TO text ---*/
+    margin: -.4em 0 .4em .2em;
+    font-size: .8em;
+    font-weight: 600;
+    color: #555;
+}
+
 /* -- Used-site navigation
 ------------------------------------------------------------- */
 
