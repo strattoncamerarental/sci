@@ -182,6 +182,8 @@ function resetImageZoom() {
 	isPanning = false;
 	isPinching = false;
 
+	modalImage.classList.remove('is-zoomed');
+	
 	applyImageTransform();
 }
 
@@ -294,6 +296,83 @@ modalImage?.addEventListener('touchend', event => {
 		if (imageScale <= 1) {
 			resetImageZoom();
 		}
+	}
+});
+
+/* Desktop zoom / pan */
+
+let mouseStartX = 0;
+let mouseStartY = 0;
+let mouseImageX = 0;
+let mouseImageY = 0;
+let mouseMoved = false;
+let mousePanning = false;
+
+
+modalImage?.addEventListener('mousedown', event => {
+	if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+		return;
+	}
+
+	if (imageScale > 1) {
+		event.preventDefault();
+
+		mousePanning = true;
+		mouseMoved = false;
+
+		mouseStartX = event.clientX;
+		mouseStartY = event.clientY;
+
+		mouseImageX = imageX;
+		mouseImageY = imageY;
+	}
+});
+
+
+document.addEventListener('mousemove', event => {
+	if (!mousePanning) return;
+
+	const deltaX = event.clientX - mouseStartX;
+	const deltaY = event.clientY - mouseStartY;
+
+	if (Math.abs(deltaX) > 3 || Math.abs(deltaY) > 3) {
+		mouseMoved = true;
+	}
+
+	imageX = mouseImageX + deltaX;
+	imageY = mouseImageY + deltaY;
+
+	applyImageTransform();
+});
+
+
+document.addEventListener('mouseup', () => {
+	mousePanning = false;
+});
+
+
+modalImage?.addEventListener('click', event => {
+	if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+		return;
+	}
+
+	event.stopPropagation();
+
+	if (mouseMoved) {
+		mouseMoved = false;
+		return;
+	}
+
+	if (imageScale > 1) {
+		resetImageZoom();
+	}
+	else {
+		imageScale = 1.75;
+		imageX = 0;
+		imageY = 0;
+
+		modalImage.classList.add('is-zoomed');
+		applyImageTransform();
 	}
 });
 

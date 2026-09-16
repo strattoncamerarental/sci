@@ -494,6 +494,8 @@ body.nav-open #mobile-nav {
   max-height: 80vh;
   height: auto;
   object-fit: contain;
+  transform-origin: center center;
+  will-change: transform;
 }
 
 
@@ -503,9 +505,18 @@ body.nav-open #mobile-nav {
   touch-action: none;
 }
 
-.used-modal-image {
-  transform-origin: center center;
-  will-change: transform;
+@media (hover: hover) and (pointer: fine) {
+  .used-modal-image {
+    cursor: zoom-in;
+  }
+
+  .used-modal-image.is-zoomed {
+    cursor: grab;
+  }
+
+  .used-modal-image.is-zoomed:active {
+    cursor: grabbing;
+  }
 }
 
 
@@ -609,7 +620,6 @@ body.nav-open #mobile-nav {
   font-size: 0.9em;
 }
 
-
 /* Keep modal arrows onscreen on touch devices */
 
 @media (hover: none) and (pointer: coarse) {
@@ -638,6 +648,17 @@ body.nav-open #mobile-nav {
 .used-modal-next {
   right: 0;
 }
+}
+
+/* Keep modal arrows onscreen on desktop image enlargement */
+
+.used-modal-content:has(.used-modal-image.is-zoomed) .used-modal-prev,
+.used-modal-content:has(.used-modal-image.is-zoomed) .used-modal-next {
+	background: rgba(0, 0, 0, 0.45) !important;
+}
+
+.used-modal-content:has(.used-modal-image.is-zoomed) .used-modal-close {
+	background: rgba(0, 0, 0, 0.45) !important;
 }
 
 
