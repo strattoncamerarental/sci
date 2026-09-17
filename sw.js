@@ -18,7 +18,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 // VERSIONED CACHES
 ////////////////////////////////////////////////////////////////////////////////
-const SW_VERSION = 'v17.76';
+const SW_VERSION = 'v17.8';
 
 const PRECACHE = `precache-${SW_VERSION}`;
 const RUNTIME  = `runtime-${SW_VERSION}`;
@@ -79,9 +79,8 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return;
 
-  // Documents (HTML) → network-first
+  // Documents (HTML) → let the browser handle normally
   if (req.mode === 'navigate' || req.destination === 'document') {
-    event.respondWith(networkFirst(req));
     return;
   }
 
@@ -110,21 +109,6 @@ self.addEventListener('fetch', (event) => {
 ////////////////////////////////////////////////////////////////////////////////
 // STRATEGIES
 ////////////////////////////////////////////////////////////////////////////////
-
-async function networkFirst(request) {
-  const cache = await caches.open(RUNTIME);
-
-  try {
-    const res = await fetch(request, { cache: 'no-store', redirect: 'follow' });
-    if (isGoodResponse(res, request)) {
-      cache.put(request, res.clone());
-    }
-    return res;
-  } catch {
-    const cached = await cache.match(request);
-    return cached || offlineDocument();
-  }
-}
 
 async function staleWhileRevalidate(request, event, strictType = false) {
   const cache = await caches.open(RUNTIME);
@@ -199,15 +183,6 @@ function isGoodResponse(res, req, strictType = false) {
   if (dest === 'document') return ct.includes('html');
 
   return true;
-}
-
-function offlineDocument() {
-  return new Response(
-    '<!doctype html><title>Offline</title>' +
-    '<meta name="viewport" content="width=device-width,initial-scale=1">' +
-    '<h1>Offline</h1><p>This page isn’t available without a connection.</p>',
-    { headers: { 'content-type': 'text/html; charset=utf-8' }, status: 503 }
-  );
 }
 
 function offlineFallback() {
