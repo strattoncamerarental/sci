@@ -198,6 +198,24 @@ body.nav-open #mobile-nav {
   text-transform: uppercase;
 }
 
+.used-subheading {
+  grid-column: 1 / -1;
+  width: 25%;
+  margin: .5em 0 -1.5em;
+  padding-left: .25em;
+  border-bottom: 1px solid #ddd;
+  color: #666;
+  font-size: .85em;
+  font-weight: 500;
+  line-height: .5;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.used-subheading.tight {
+  margin: -2em 0 .9em;
+}
+
 .top-of-page {
   grid-column: 1 / -1;
   text-align: center;
