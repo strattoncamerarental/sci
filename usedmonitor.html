@@ -359,6 +359,7 @@
 				NOTE: Backdrops may be exchanged between the Large and Small Kits if preferred.
 			</p>
 			<p class="used-note">
+				<a href="#" onclick="openiframeModal('https://player.vimeo.com/video/7836457?byline=0&amp;portrait=0'); return false;" class="used-yt">Watch Demo Video</a>&emsp;|&emsp;
 				<a href="pdf/reflecmedia_User_Guide.pdf" target="_blank" rel="noopener">Download Manual&nbsp;<img src="img/download.png" alt="" style="width:9px"></a>
 			</p>	
 			<a class="used-inquire" href="mailto:used@strattoncamera.com?subject=Used%20equipment%20inquiry%20reflecmedia"> Inquire about this item </a> 
@@ -386,6 +387,14 @@
 			&#10095;
 		</button>
 		<div class="used-modal-count" aria-live="polite"></div>
+	</div>
+</div>
+<div id="iframeModal" class="modal">
+	<span class="close video-modal-close" onclick="closeiframeModal()">CLOSE<br>VIDEO</span>
+	<div id="modaliframeContainer" class="modal-content1">
+		<iframe id="modaliframe"
+			allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen;">
+		</iframe>
 	</div>
 </div>
 <script src="js/jq.min.js"></script>
