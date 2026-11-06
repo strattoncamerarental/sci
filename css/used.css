@@ -277,16 +277,33 @@ body.nav-open #mobile-nav {
   height: 23px;
   background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238c8c8c' stroke-width='1.6' stroke-linecap='round'%3E%3Ccircle cx='10' cy='10' r='6.5'/%3E%3Cpath d='M15 15L21 21'/%3E%3Cpath d='M10 7v6M7 10h6'/%3E%3C/svg%3E")
 	center / contain no-repeat;
+  transition: opacity .25s ease;	
   pointer-events: none;
 }
 
+.used-gallery-main::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000000' stroke-width='1.6' stroke-linecap='round'%3E%3Ccircle cx='10' cy='10' r='6.5'/%3E%3Cpath d='M15 15L21 21'/%3E%3Cpath d='M10 7v6M7 10h6'/%3E%3C/svg%3E") no-repeat center;
+  background-size: 48px 48px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .5s ease;
+}
+
 @media (hover: hover) and (pointer: fine) {
+  .used-gallery-main:hover::before {
+    opacity: 0.15;
+  }
+
   .used-gallery-main:hover::after {
-    opacity: 1;
+    opacity: .85;
   }
 
   .used-gallery-main:hover img {
-    opacity: 0.7;
+    opacity: 0.5;
   }
 }
 
